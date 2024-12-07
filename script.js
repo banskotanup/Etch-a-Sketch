@@ -1,8 +1,20 @@
 let color = "black";
+let click = false;
 
 document.addEventListener("DOMContentLoaded", function () {
     createContainer(16);
-    console.log("hi");
+    document.querySelector("body").addEventListener("click", (e) => {
+        if (e.target.tagName != "BUTTON") {
+            click = !click;
+            let draw = document.querySelector("#draw");
+            if (click) {
+                draw.textContent = "Now you can draw.";
+            }
+            else {
+                draw.textContent = "You are not allowed to draw.";
+            }
+        }
+    });
 })
 
 const popUp = document.querySelector("#popup");
@@ -44,14 +56,21 @@ function getSize() {
 }
 
 function colorDiv() {
-    if (color == "random") {
-        this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-    }
-    else {
-        this.style.backgroundColor = "black";
+    if (click) {
+        if (color == "random") {
+            this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        }
+        else {
+            this.style.backgroundColor = "black";
+        }
     }
 }
 
 function setColor(colorChoice) {
     color = colorChoice;
+}
+
+function resetContainer() {
+    let divs = document.querySelectorAll("div");
+    divs.forEach((div) => div.style.backgroundColor = "white");
 }
